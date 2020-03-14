@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="spa">
+<head>
+    <title>Ejercicio DSA</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="contanier">
+    <h1>BIENVENIDOS A LA PÁGINA WEB PARA ESPIAS DE GITHUB</h1>
+</div>
+
+<div class="form-group">
+    <label> Usuario GitHub:  </label>
+    <input type="text" id="usr" name="usr" class="form-control" placeholder="Usuario">
+    <button id="busca" class="btn btn-primary btn-med">Buscar</button>
+</div>
+
+<div class="container">
+    <h2>Datos GitHub </h2>
+    <table class="table" id = "tabla">
+        <thead>
+        <tr>
+            <th>Repositorio GitHub</th>
+            <th>Descripción</th>
+            <th>Seguidores</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#busca").click(function(){
+            $("#tabla tbody tr").remove();
+            $.get("https://api.github.com/users/" + $("#usr").val() + "/repos", function(data){
+                $.each(data, function(index,element){
+                    var id = element.name;
+                    var name = element.name;
+                    var description = element.description;
+                    var followers = element.stargazers_count;
+                    var insertion = "<tr><td>" + id + "</td><td>" + name + "</td><td>" + description + "</td><td>" + followers +"</td></tr>";
+                    $("#tabla tbody").append(insertion);
+                });
+            }, "json" );
+            $("#usr").val();
+        });
+    });
+    </script>
+</body>
+</html>
